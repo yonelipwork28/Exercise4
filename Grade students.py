@@ -13,6 +13,10 @@ from PySide6.QtWidgets import (
     QWidget,
 )
 
+import csv
+
+
+
 
 class Grade_Students(QWidget):
     def __init__(self):
@@ -141,6 +145,32 @@ class Grade_Students(QWidget):
             0,
             lambda: self.scroll_area.ensureWidgetVisible(self.table_card, 0, 16),
         )
+        
+        with open (self.selected_csv_path , mode="r" ,encoding="utf-8" , meanline="") as f:
+            reader = csv.reader(f)
+            next(reader , None)
+
+            self.empty_state.hide()
+            grid_row=1
+
+            for row in f: 
+                if len(row)<2:
+                    continue
+
+                student_id = row[0].strip()
+                grade = row[1].strip()
+
+                id_label=QLabel(student_id)
+                id_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+
+                grade_label = QLabel(grade)
+                grade_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+
+                self.table_card.addWidget(id_label,grid_row , 0)
+                self.table_card.addWidget(grade_label , grid_row ,1)
+
+
+
 
 
 if __name__ == "__main__":
