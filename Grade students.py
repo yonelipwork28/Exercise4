@@ -192,7 +192,11 @@ class Grade_Students(QWidget):
             new_grade = int(float(grade_label.text()))+num_point
             grade_label.setText(str(new_grade))
     
-
+        with open (self.selected_csv_path , mode="w" ,encoding="utf-8-sig" , newline="") as f:
+                writer = csv.writer(f)
+                writer.writerow(["ID Student","Grade"])
+                for student_id, grade_label in self.rows_widget:
+                    writer.writerow([student_id, grade_label.text()])
 
 
 
