@@ -6,7 +6,6 @@ from PySide6.QtWidgets import (
     QApplication,
     QFileDialog,
     QGridLayout,
-    QHBoxLayout,
     QLabel,
     QPushButton,
     QScrollArea,
@@ -15,7 +14,7 @@ from PySide6.QtWidgets import (
 )
 
 
-class GradeStudents(QWidget):
+class Grade_Students(QWidget):
     def __init__(self):
         super().__init__()
 
@@ -24,7 +23,7 @@ class GradeStudents(QWidget):
         self.resize(1000, 720)
         self.setMinimumSize(720, 560)
 
-        self.scroll_area = QScrollArea(self)
+        self.scroll_area = QScrollArea(self)               #מיקום גלילה אוטמטיS
         self.scroll_area.setWidgetResizable(True)
         self.scroll_area.setObjectName("pageScroll")
 
@@ -146,6 +145,6 @@ class GradeStudents(QWidget):
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
-    window = GradeStudents()
+    window = Grade_Students()
     window.show()
     sys.exit(app.exec())
