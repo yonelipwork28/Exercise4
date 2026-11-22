@@ -80,3 +80,21 @@ QLabel#tableEmptyState {
     padding: 28px 14px;
     font-size: 14px;
 }
+
+QLabel#bonusLabel {
+    color: #34415d;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+QLineEdit#bonusInput {
+    color: #19233b;
+    background-color: #ffffff;
+    border: 1px solid #cfd8e8;
+    border-radius: 8px;
+    padding: 4px 8px;
+}
+
+QLineEdit#bonusInput:focus {
+    border: 1px solid #4263eb;
+}

@@ -6,6 +6,7 @@ from PySide6.QtWidgets import (
     QApplication,
     QFileDialog,
     QGridLayout,
+    QHBoxLayout,
     QLabel,
     QPushButton,
     QScrollArea,
@@ -76,9 +77,21 @@ class Grade_Students(QWidget):
         welcome_layout.addWidget(self.file_status_label)
 
         self.add_points=QLineEdit()
+        self.add_points.setObjectName("bonusInput")
         self.add_points.setPlaceholderText("נקודות בונוס")
         self.add_points.setFixedSize(100, 36) 
         self.add_points.returnPressed.connect(self.add_points_bonus)
+
+        self.bonus_label = QLabel("נקודות בונוס:")
+        self.bonus_label.setObjectName("bonusLabel")
+        self.bonus_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+
+        bonus_layout = QHBoxLayout()
+        bonus_layout.addStretch(1)
+        bonus_layout.addWidget(self.add_points)
+        bonus_layout.addSpacing(10)
+        bonus_layout.addWidget(self.bonus_label)
+        bonus_layout.addStretch(1)
 
         
         self.table_card = QWidget()
@@ -90,7 +103,7 @@ class Grade_Students(QWidget):
 
         table_title = QLabel("טבלת ציונים")
         table_title.setObjectName("tableTitle")
-        table_title.setAlignment(Qt.AlignmentFlag.AlignRight)
+        table_title.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
         table = QWidget()
         table.setObjectName("gradesTable")
@@ -123,7 +136,7 @@ class Grade_Students(QWidget):
         self.table_grid.addWidget(self.empty_state, 1, 0, 1, 2)
 
         table_layout.addWidget(table_title)
-        table_layout.addWidget(self.add_points)
+        table_layout.addLayout(bonus_layout)
         table_layout.addWidget(table)
 
         page_layout.addWidget(welcome_card)
