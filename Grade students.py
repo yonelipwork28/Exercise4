@@ -11,6 +11,7 @@ from PySide6.QtWidgets import (
     QScrollArea,
     QVBoxLayout,
     QWidget,
+    QLineEdit,
 )
 
 import csv
@@ -88,12 +89,12 @@ class Grade_Students(QWidget):
         table = QWidget()
         table.setObjectName("gradesTable")
         table.setLayoutDirection(Qt.LayoutDirection.LeftToRight)
-        table_grid = QGridLayout(table)
-        table_grid.setContentsMargins(0, 0, 0, 0)
-        table_grid.setHorizontalSpacing(1)
-        table_grid.setVerticalSpacing(1)
-        table_grid.setColumnStretch(0, 1)
-        table_grid.setColumnStretch(1, 1)
+        self.table_grid = QGridLayout(table)
+        self.table_grid.setContentsMargins(0, 0, 0, 0)
+        self.table_grid.setHorizontalSpacing(1)
+        self.table_grid.setVerticalSpacing(1)
+        self.table_grid.setColumnStretch(0, 1)
+        self.table_grid.setColumnStretch(1, 1)
 
         student_id_header = QLabel("ID Student")
         student_id_header.setObjectName("tableHeader")
@@ -103,13 +104,17 @@ class Grade_Students(QWidget):
         grade_header.setObjectName("tableHeader")
         grade_header.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
-        empty_state = QLabel("הטבלה מוכנה להצגת הנתונים")
-        empty_state.setObjectName("tableEmptyState")
-        empty_state.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
-        table_grid.addWidget(student_id_header, 0, 0)
-        table_grid.addWidget(grade_header, 0, 1)
-        table_grid.addWidget(empty_state, 1, 0, 1, 2)
+        self.rows_widget = []
+
+
+        self.empty_state = QLabel("הטבלה מוכנה להצגת הנתונים")
+        self.empty_state.setObjectName("tableEmptyState")
+        self.empty_state.setAlignment(Qt.AlignmentFlag.AlignCenter)
+
+        self.table_grid.addWidget(student_id_header, 0, 0)
+        self.table_grid.addWidget(grade_header, 0, 1)
+        self.table_grid.addWidget(self.empty_state, 1, 0, 1, 2)
 
         table_layout.addWidget(table_title)
         table_layout.addWidget(table)
@@ -146,14 +151,14 @@ class Grade_Students(QWidget):
             lambda: self.scroll_area.ensureWidgetVisible(self.table_card, 0, 16),
         )
         
-        with open (self.selected_csv_path , mode="r" ,encoding="utf-8" , meanline="") as f:
+        with open (self.selected_csv_path , mode="r" ,encoding="utf-8-sig" , newline="") as f:
             reader = csv.reader(f)
             next(reader , None)
 
             self.empty_state.hide()
             grid_row=1
 
-            for row in f: 
+            for row in reader: 
                 if len(row)<2:
                     continue
 
@@ -166,10 +171,13 @@ class Grade_Students(QWidget):
                 grade_label = QLabel(grade)
                 grade_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
-                self.table_card.addWidget(id_label,grid_row , 0)
-                self.table_card.addWidget(grade_label , grid_row ,1)
+                self.table_grid.addWidget(id_label,grid_row , 0)
+                self.table_grid.addWidget(grade_label , grid_row ,1)
 
 
+                self.rows_widget.append((student_id,grade_label))
+
+                grid_row+=1
 
 
 
