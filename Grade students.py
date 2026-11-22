@@ -75,6 +75,12 @@ class Grade_Students(QWidget):
         welcome_layout.addWidget(self.upload_button, alignment=Qt.AlignmentFlag.AlignCenter)
         welcome_layout.addWidget(self.file_status_label)
 
+        self.add_points=QLineEdit()
+        self.add_points.setPlaceholderText("נקודות בונוס")
+        self.add_points.setFixedSize(100, 36) 
+        self.add_points.returnPressed.connect(self.add_points_bonus)
+
+        
         self.table_card = QWidget()
         self.table_card.setObjectName("tableCard")
         self.table_card.hide()
@@ -117,6 +123,7 @@ class Grade_Students(QWidget):
         self.table_grid.addWidget(self.empty_state, 1, 0, 1, 2)
 
         table_layout.addWidget(table_title)
+        table_layout.addWidget(self.add_points)
         table_layout.addWidget(table)
 
         page_layout.addWidget(welcome_card)
@@ -178,6 +185,14 @@ class Grade_Students(QWidget):
                 self.rows_widget.append((student_id,grade_label))
 
                 grid_row+=1
+
+    def add_points_bonus(self):    
+        num_point=int(self.add_points.text())       
+        for _,grade_label in self.rows_widget:
+            new_grade = int(float(grade_label.text()))+num_point
+            grade_label.setText(str(new_grade))
+    
+
 
 
 
